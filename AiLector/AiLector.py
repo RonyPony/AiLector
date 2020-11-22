@@ -21,7 +21,10 @@ def read():
     import os.path
     extension = os.path.splitext(file)[1]
     extensionOk = False
-    if extension == '.png':
+    allowedImageFormats = [".png", ".jpg", ".jpeg"]
+    allowedDocsFormats = [".pdf"]
+         
+    if extension in allowedImageFormats:
         extensionOk = True
         print("------------------>   L E Y E N D O    I M A G E N    P N G ")
         print("Leyendo " + file)
@@ -31,7 +34,7 @@ def read():
         from pytesseract import image_to_string
         texto = image_to_string(Image.open(file))
         print("## LECTURA COMPLETADA")
-    if extension == '.pdf':
+    if extension in allowedDocsFormats:
         print("------------------>   L E Y E N D O     D O C U M E N T O     P D F  ")
         extensionOk = True
         # Import libraries

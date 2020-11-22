@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['AiLector.py'],
-             pathex=['C:\\Users\\ronel\\source\\repos\\AiLector\\AiLector'],
+             pathex=['C:\\Users\\ronel\\source\\repos\\AiLectorGit\\AiLector\\AiLector'],
              binaries=[],
              datas=[],
              hiddenimports=[],
