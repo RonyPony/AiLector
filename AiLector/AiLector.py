@@ -85,7 +85,7 @@ def press(button):
                 # PDF page 3 -> page_3.jpg
                 # ....
                 # PDF page n -> page_n.jpg
-                filename = "/tmp/page_" + str(image_counter) + ".jpg"
+                filename = os.getcwd() +"/tmp/page_" + str(image_counter) + ".jpg"
       
                 # Save the image of the page in system
                 page.save(filename, 'JPEG') 
@@ -100,7 +100,7 @@ def press(button):
            filelimit = image_counter - 1
   
             # Creating a text file to write the output
-           outfile = "/tmp/out_text.txt"
+           outfile = os.getcwd()+"/tmp/out_text.txt"
   
             # Open the file in append mode so that
             # All contents of all images are added to the same file
@@ -115,7 +115,7 @@ def press(button):
                 # page_2.jpg
                 # ....
                 # page_n.jpg
-                filename = "/tmp/page_" + str(i) + ".jpg"
+                filename = os.getcwd()+"/tmp/page_" + str(i) + ".jpg"
           
                 # Recognize the text as string in image using pytesserct
                 text = str(((pytesseract.image_to_string(Image.open(filename))))) 
@@ -137,7 +137,7 @@ def press(button):
             # Close the file after writing all the text.
            f.close() 
            from pathlib import Path
-           texto = Path('/tmp/out_text.txt').read_text()
+           texto = Path(os.getcwd()+'/tmp/out_text.txt').read_text()
            clear_dir('tmp');
            print("## LECTURA COMPLETADA")
            setStatus(" LECTURA COMPLETADA")
@@ -154,8 +154,12 @@ def press(button):
 
        if extensionOk == True:
             #setStatus("G U A R D A N D O     A R C H I V O     T X T  ")
-            print("------------------>   G U A R D A N D O     A R C H I V O     T X T  ")
+            print("------------------>   G U A R D A N D O     A R C H I V O    ")
             outputExt = app.getOptionBox("Formato de salida")
+            if outputExt == "Archivo de texto plano":
+                outputExt = ".txt";
+            if outputExt == "Documento de Word":
+                outputExt = ".docx";
             exxt = "File"
             exxt2 = "*"+outputExt
             
@@ -180,15 +184,17 @@ def press(button):
                 document.save(file.name)
 
             
-            messageBox("Archivo completado")
+            messageBox("Archivo completado. Se ha guardado el texto en "+file.name)
             setStatus("Archivo completado")
-            setStatus("A B R I E N D O    A R C H I V O     T X T  ")
-            print("------------------>   A B R I E N D O    A R C H I V O     T X T  ")
-            openFile(file)
-       if extension == False:
-           #dosomething
+            if app.getOptionBox("Formato de salida") == "Archivo de texto plano":
+                setStatus("A B R I E N D O    A R C H I V O     T X T  ")
+                print("------------------>   A B R I E N D O    A R C H I V O     T X T  ")
+                openFile(file)
+       if extensionOk == False:
            setStatus("Formato Incorrecto")
            messageBox("El formato del archivo que has seleccionado es "+extension+" y este por el momento no es admitido.")
+           #dosomething
+           
 
                  
 
@@ -376,7 +382,7 @@ def updateInfo():
     #x.setLabel("path", formLoadedFilePath)
     
 def createForm(x):
-    availableOutputFormats = [".docx", ".txt"]
+    availableOutputFormats = ["Documento de Word", "Archivo de texto plano"]
     x.setBg(formBGcolor)
     x.setFont(formFontSize)
     x.addLabel("title", formMainLabel)
