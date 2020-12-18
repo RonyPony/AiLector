@@ -18,6 +18,7 @@ formLoadedFileSize = "[Tamaño] ["+defVal+"]"
 formLoadedFilePath = "[Ruta] ["+defVal+"]"
 formStatus = "Seleccione un Archivo"
 app = gui(formTitle, "600x200")
+
 def press(button):
     setStatus("Por favor espere")
     if button == "Cancel":
@@ -137,7 +138,7 @@ def press(button):
            f.close() 
            from pathlib import Path
            texto = Path('/tmp/out_text.txt').read_text()
-           clear_dir('tmp')
+           clear_dir('tmp');
            print("## LECTURA COMPLETADA")
            setStatus(" LECTURA COMPLETADA")
 
@@ -344,7 +345,13 @@ def clear_dir(path_):
         shutil.rmtree(path_)
 def openFile(file):
     import subprocess
-    subprocess.call(['cmd.exe', '/c', file.name])
+    import os.path
+    ruta = file.name
+    subprocess.call(['cmd.exe', '/c', ruta])
+    x = os.path.splitext(ruta)[1]
+    if x == ".docx":
+        os.system(ruta)
+        
 def analize(x):
     if x == '2':
         sys.exit()
